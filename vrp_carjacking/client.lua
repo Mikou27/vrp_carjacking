@@ -18,6 +18,7 @@ local vehBlip = false
 local cops = false
 local jobCheck = false
 local check = false
+local alert = false
 
 function vehicle_blip(entity)
 vehicle = AddBlipForEntity(entity)
@@ -38,14 +39,19 @@ function removeBlips()
  end
 end
 
-function despawn()
+function clearVar()
 removeBlips()
 toolate = true
 vehBlip = false
 cops = false
 jobCheck = false
 check = false
+alert = false
 V_toNet = nil
+end
+
+function despawn()
+clearVar()
 Spawn_veh = 0
 Despawn_veh = 0
 Wait(2000)
@@ -68,14 +74,7 @@ DeleteEntity(recelPed)
 end
 
 function despawntimer()
-removeBlips()
-check = false
-vehBlip = false
-toolate = true
-cops = false
-jobCheck = false
-check = false
-V_toNet = nil
+clearVar()
 local model1 = GetEntityModel(recelPed)
 SetModelAsNoLongerNeeded(model1)
 SetEntityAsNoLongerNeeded(recelPed)
@@ -91,13 +90,7 @@ end
 end
 
 function leaveJob()
-removeBlips()
-toolate = true
-vehBlip = false
-cops = false
-jobCheck = false
-check = false
-V_toNet = nil
+clearVar()
 vRP.notifyPicture({"CHAR_BLOCKED",4, "Infos", "Vous avez changé de métier.","~r~Vous ne pouvez plus vendre de véhicules carjackés."})
 SetEntityAsNoLongerNeeded(DriverPed)
 local model2 = GetEntityModel(DriverPed)
@@ -109,13 +102,7 @@ SetEntityAsNoLongerNeeded(thisCar)
 end
 
 function destroyed()
-removeBlips()
-toolate = true
-vehBlip = false
-cops = false
-jobCheck = false
-check = false
-V_toNet = nil
+clearVar()
 if job then
    vRP.notifyPicture({"CHAR_BLOCKED",4, "Infos", "","~r~Le vehicule ne vaut plus rien..."})--the vehicle is not valuable anymore
 end
@@ -532,7 +519,7 @@ Citizen.CreateThread(function()
 while true do
 Wait(0)
 -------------------[spawn timer]-------------------
- Spawn_veh =  math.random(850000,920000)         --
+ Spawn_veh = math.random(850000,920000)          --
  if  NetworkIsHost() then                        --
      Wait(Spawn_veh)                             --
      vehspawn =  true                            --
@@ -712,10 +699,18 @@ local player = GetPlayerPed(-1)
     end
     -------------------------------------------------------------------------------------------------
 
-    if IsPedJacking(player) and IsPedInVehicle(player,thisCar,0) then
-       SetPlayerWantedLevel(PlayerId(), 2, 0)
-       SetPlayerWantedLevelNow(PlayerId(), 0)
-    end
+      if IsPedInVehicle(player,thisCar,0) and not alert and (not toolate) then
+         local robPos = GetEntityCoords(thisCar)
+         local zone = GetNameOfZone(robPos.x,robPos.y,robPos.z)
+         SetPlayerWantedLevel(PlayerId(),2,0)
+         SetPlayerWantedLevelNow(PlayerId(),0)
+         if driverSeat == player then
+            TriggerServerEvent('CopsAlert',robPos.x,robPos.y,robPos.z,zone)
+            SetVehicleIsStolen(thisCar,1)
+         end
+         alert = true
+      end
+
 
     if IsPedInVehicle(player,thisCar,0) and driverSeat == player and (not toolate) then
          if not waypoint then
@@ -792,7 +787,6 @@ Wait(0)                                                                         
 end)                                                                                                                                                                                                               --
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
 RegisterNetEvent('sharedVID')
 AddEventHandler('sharedVID', function(V_ID)
  V_toNet = V_ID
@@ -810,5 +804,7 @@ end)
 
 RegisterNetEvent('despawnFunc')
 AddEventHandler('despawnFunc', function()
+if not toolate then
  despawntimer()
+end
 end)
