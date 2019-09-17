@@ -12,7 +12,7 @@ local vehspawn = false
 local incar = false
 local waypoint = false
 local Despawn_veh = 0
-local receler = false 
+local receler = false
 local vehBlip = false
 local cops = false
 local jobCheck = false
@@ -128,28 +128,28 @@ DrawText(x - width/2, y - height/2 + 0.005)
 end
 
 local positions = { -- spawn positions
-{x=241.11,y=-1018.93,z=29.23,h=335.10},
-{x=-387.61,y=-376.46,z=31.76,h=81.07},
-{x=-984.17,y=-831.63,z=15.49,h=237.51},
-{x=552.48,y=256.65,z=103.06,h=248.65},
-{x=258.84,y=-1697.63,z=29.11,h=317.59},
-{x=-1624.92,y=-428.73,z=39.65,h=320.0},
-{x=-295.99,y=-204.59,z=33.18,h=38.22},
-{x=807.14,y=-1231.17,z=26.33,h=353.39},
-{x=1033.68,y=-216.52,z=70.13,h=242.71},
-{x=-905.01,y=-1797.69,z=36.99,h=146.61},
-{x=1189.49,y=-1898.83,z=34.62,h=14.53},
-{x=1168.30,y=-991.09,z=70.13,h=6.04},
-{x= 266.79,y= -570.0,z= 43.31,h=340.78},
-{x= 277.58,y= -553.66,z= 43.31,h=342.44},
-{x= -1728.26,y= 43.02,z= 67.29,h=35.35},
-{x= -434.33,y= -1552.94,z= 38.74,h=156.67},
-{x= 456.93,y= -2101.35,z= 21.94,h=319.39},
-{x= -1106.95,y= 261.65,z= 63.70,h=264.80},
-{x= -229.12,y= -612.21,z= 33.18,h=341.27},
-{x=-1193.14,y=-849.12,z=14.11,h=127.46}
+-- {x=241.11,y=-1018.93,z=29.23,h=335.10},
+-- {x=-387.61,y=-376.46,z=31.76,h=81.07},
+-- {x=-984.17,y=-831.63,z=15.49,h=237.51},
+-- {x=552.48,y=256.65,z=103.06,h=248.65},
+-- {x=258.84,y=-1697.63,z=29.11,h=317.59},
+-- {x=-1624.92,y=-428.73,z=39.65,h=320.0},
+-- {x=-295.99,y=-204.59,z=33.18,h=38.22},
+-- {x=807.14,y=-1231.17,z=26.33,h=353.39},
+-- {x=1033.68,y=-216.52,z=70.13,h=242.71},
+-- {x=-905.01,y=-1797.69,z=36.99,h=146.61},
+-- {x=1189.49,y=-1898.83,z=34.62,h=14.53},
+-- {x=1168.30,y=-991.09,z=70.13,h=6.04},
+-- {x= 266.79,y= -570.0,z= 43.31,h=340.78},
+-- {x= 277.58,y= -553.66,z= 43.31,h=342.44},
+-- {x= -1728.26,y= 43.02,z= 67.29,h=35.35},
+-- {x= -434.33,y= -1552.94,z= 38.74,h=156.67},
+-- {x= 456.93,y= -2101.35,z= 21.94,h=319.39},
+-- {x= -1106.95,y= 261.65,z= 63.70,h=264.80},
+-- {x= -229.12,y= -612.21,z= 33.18,h=341.27},
+-- {x=-1193.14,y=-849.12,z=14.11,h=127.46}
 --test
---{x=1202.60,y=-3089.63,z=5.80,h=127.46}
+{x=1202.60,y=-3089.63,z=5.80,h=127.46}
 }
 
  local vehmodels = {
@@ -518,7 +518,7 @@ Citizen.CreateThread(function()
 while true do
 Wait(0)
 -------------------[spawn timer]-------------------
- Spawn_veh = math.random(850000,920000)          --
+ Spawn_veh = 5000--math.random(850000,920000)          --
  if  NetworkIsHost() then                        --
      Wait(Spawn_veh)                             --
      vehspawn =  true                            --
@@ -559,7 +559,7 @@ local player = GetPlayerPed(-1)
 
     SellableCar = CreateVehicle(vehmodel, pos.x,pos.y,pos.z,pos.h, true, true)
     Citizen.InvokeNative(0x06FAACD625D80CAA, SellableCar)
-    DriverPed = CreatePed(4,drivermodel,pos.x,pos.y,pos.z,pos.h, true, true)
+   -- DriverPed = CreatePed(4,drivermodel,pos.x,pos.y,pos.z,pos.h, true, true)
     SetEntityAsMissionEntity(DriverPed,1,1)
     SetEntityAsMissionEntity(SellableCar,1,1)
     SetPedIntoVehicle(DriverPed, SellableCar, -1)
@@ -621,7 +621,7 @@ local player = GetPlayerPed(-1)
               if IsEntityAtCoord(player,1204.52, -3115.68, 5.54,2.5,2.5, 4.0, 0, 1, 0) and not arrived then
                  for i= 0,8 do
                    plyInVeh = {GetPedInVehicleSeat(thisCar,i)}
-				   TaskLeaveVehicle(player,thisCar,0)
+                   TaskLeaveVehicle(player,thisCar,0)
                    TaskLeaveVehicle(plyInVeh[i],thisCar,0)
                  end
 
@@ -699,17 +699,17 @@ local player = GetPlayerPed(-1)
     end
     -------------------------------------------------------------------------------------------------
 
-      if IsPedInVehicle(player,thisCar,0) and not alert and (not toolate) then
-         local robPos = GetEntityCoords(thisCar)
-         local zone = GetNameOfZone(robPos.x,robPos.y,robPos.z)
-         SetPlayerWantedLevel(PlayerId(),2,0)
-         SetPlayerWantedLevelNow(PlayerId(),0)
-         if driverSeat == player then
-            TriggerServerEvent('CopsAlert',robPos.x,robPos.y,robPos.z,zone)
-            SetVehicleIsStolen(thisCar,1)
-         end
-         alert = true
-      end
+    if IsPedInVehicle(player,thisCar,0) and not alert and (not toolate) then
+       local robPos = GetEntityCoords(thisCar)
+       local zone = GetNameOfZone(robPos.x,robPos.y,robPos.z)
+       SetPlayerWantedLevel(PlayerId(),2,0)
+       SetPlayerWantedLevelNow(PlayerId(),0)
+       if driverSeat == player then
+          TriggerServerEvent('CopsAlert',robPos.x,robPos.y,robPos.z,zone)
+          SetVehicleIsStolen(thisCar,1)
+       end
+       alert = true
+    end
 
 
     if IsPedInVehicle(player,thisCar,0) and driverSeat == player and (not toolate) then
