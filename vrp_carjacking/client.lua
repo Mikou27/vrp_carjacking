@@ -12,8 +12,7 @@ local vehspawn = false
 local incar = false
 local waypoint = false
 local Despawn_veh = 0
-local receler = false
-local arrived = false
+local receler = false 
 local vehBlip = false
 local cops = false
 local jobCheck = false
@@ -620,8 +619,9 @@ local player = GetPlayerPed(-1)
                  receler = true
               end
               if IsEntityAtCoord(player,1204.52, -3115.68, 5.54,2.5,2.5, 4.0, 0, 1, 0) and not arrived then
-                 for i= 1,8 do
-                   plyInVeh = {GetPedInVehicleSeat(thisCar,-i)}
+                 for i= 0,8 do
+                   plyInVeh = {GetPedInVehicleSeat(thisCar,i)}
+				   TaskLeaveVehicle(player,thisCar,0)
                    TaskLeaveVehicle(plyInVeh[i],thisCar,0)
                  end
 
