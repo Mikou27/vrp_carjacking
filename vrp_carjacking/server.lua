@@ -137,58 +137,27 @@ local user_id = vRP.getUserId({source})
      Wait(2500)
 
      if Class == 0 then
-            vRP.giveInventoryItem({user_id,"dirty_money",math.floor(math.random(6000,11000)*Damage),1})
-            vRP.varyExp({user_id,"criminel","braquage",2})
-
+            vRP.giveInventoryItem({user_id,"dirty_money",math.floor(math.random(6000,11000)*Damage),1})           
      elseif Class == 1 then
-
              vRP.giveInventoryItem({user_id,"dirty_money",math.floor(math.random(4000,8000)*Damage),1})
-             vRP.varyExp({user_id,"criminel","braquage",2})
-
      elseif Class == 2 then
-
-            vRP.giveInventoryItem({user_id,"dirty_money",math.floor(math.random(9000,15000)*Damage),1})
-            vRP.varyExp({user_id,"criminel","braquage",2})
-
+            vRP.giveInventoryItem({user_id,"dirty_money",math.floor(math.random(9000,15000)*Damage),1}
      elseif Class == 3 then
-
            vRP.giveInventoryItem({user_id,"dirty_money",math.floor(math.random(6000,11000)*Damage),1})
-           vRP.varyExp({user_id,"criminel","braquage",2})
-
      elseif Class == 4 then
-
             vRP.giveInventoryItem({user_id,"dirty_money",math.floor(math.random(8000,13000)*Damage),1})
-            vRP.varyExp({user_id,"criminel","braquage",2})
-
      elseif Class == 5 then
-
             vRP.giveInventoryItem({user_id,"dirty_money",math.floor(math.random(12000,20000)*Damage),1})
-            vRP.varyExp({user_id,"criminel","braquage",2})
-
      elseif Class == 6 then
-
             vRP.giveInventoryItem({user_id,"dirty_money",math.floor(math.random(9000,16000)*Damage),1})
-            vRP.varyExp({user_id,"criminel","braquage",2})
-
      elseif Class == 7 then
-
             vRP.giveInventoryItem({user_id,"dirty_money",math.floor(math.random(25000,35000)*Damage),1})
-            vRP.varyExp({user_id,"criminel","braquage",2})
-
      elseif Class == 8 then
-
             vRP.giveInventoryItem({user_id,"dirty_money",math.floor(math.random(6000,9000)*Damage),1})
-            vRP.varyExp({user_id,"criminel","braquage",2})
-
      elseif Class == 9 then
-
             vRP.giveInventoryItem({user_id,"dirty_money",math.floor(math.random(5000,10000)*Damage),1})
-            vRP.varyExp({user_id,"criminel","braquage",2})
-
      elseif Class == 12 then
-
             vRP.giveInventoryItem({user_id,"dirty_money",math.floor(math.random(1500,6000)*Damage),1})
-            vRP.varyExp({user_id,"criminel","braquage",2})
      end
 
   end
